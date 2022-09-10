@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<!--change "{'%  load staticfiles '%} " -->
+{%  load static %}
+<html lang="en">
+    <head>
+            <link rel="stylesheet" type="text/css" href={%  static 'Myapp/style.css' %} />
+            <!--rel：relationship， 是指当前文档和被链接文档之间的关系，比如CSS就是stylesheet，这个是一个关键字
+            type， 被链接文档的MIME类型-->
+            <title>E-Learning WebApp - {% block title %}Welcome!{% endblock %}</title>
+    </head>
+    <body>
+        <div>
+            {% if request.user.is_authenticated %}
+                <h1>{% block myhdg %}Hello {{request.user.firstname }} {% endblock %}</h1>
+            {%  else %}
+                <h1>Hello firstname </h1>
+            {% endif %}
+
+            {% block body_block %}***{% endblock %}
+        </div>
+        <hr /> <!--this is for creating a horizontal line-->
+        <div>
+            <ul>
+                <li class="hbar1"><a href="/Myapp/about" >Find out about our E-Learning site</a><br></li>
+                <li class="hbar1"><a href={% url 'Myapp:index' %}>Click here to return to main page</a><br></li>
+                <!--我发现，这个路由，是url中的 name,而且冒号前后不能有空格-->
+                <li class="hbar1"><a href={% url 'Myapp:course_list' %}>Check the available courses list</a></li>
+            </ul>
+        </div>
+        <hr /> <!--this is for creating a horizontal line-->
+    <div>
+        {% if request.user.is_authenticated %}
+            <li class="hbar1"><a href={% url 'Myapp:logout' %}>Logout</a></li>
+            <li class="hbar1"><a href={% url 'Myapp:myaccount' %}>My account</a><br></li>
+        {% else %}
+            <li class="hbar1"><a href="/Myapp/register" >Register</a></li>
+             <li class="hbar1"><a href={% url 'Myapp:login' %}>login</a></li>
+        {% endif %}
+    </div>
+    </body>
+</html>

@@ -1,0 +1,25 @@
+{%  extends 'Myapp/base.html' %}
+{% block body_block %}
+    <p><strong>Place Order: {{ msg }}</strong></p>
+    <div>
+    <ol>
+        {% for cour in courlist%}
+            <li>{{ cour.name }}  ${{ cour.price }}</li>
+            <!--action 后面其实是数据要提交给的url-->
+        {% endfor %}
+    </ol>
+    </div>
+    <div>
+            <form action="" method="post">
+            {% csrf_token %}
+
+                     {{ form.course.label  }} : {{ form.course  }}
+                 {{ form.levels.label  }} : {{ form.levels  }}
+                 {{ form.order_date.label  }} : {{ form.order_date  }}
+
+            <input type="submit" value="Submit"/>
+            </form>
+    </div>
+{% endblock  %}
+
+{% block title %}place_order{% endblock %}
